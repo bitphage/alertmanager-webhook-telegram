@@ -3,11 +3,15 @@ from flask import request
 import telegram
 import logging
 
+logger = logging.getLogger(__name__)
+
 app = Flask(__name__)
 app.secret_key = 'aYT>.L$kk2h>!'
 
 CHAT_ID = 'chatID'
 TOKEN = 'botToken'
+
+bot = telegram.Bot(token=TOKEN)
 
 @app.route('/alert', methods = ['POST'])
 def postAlertmanager():
@@ -27,16 +31,13 @@ Instance: """+alert['labels']['instance']+"""("""+alert['labels']['name']+""")
     
 """+alert['annotations']['description']+"""
 """
-            bot = telegram.Bot(token=TOKEN)
             bot.sendMessage(chat_id=CHAT_ID, text=message)
     except Exception as e:
 
-        logger = logging.getLogger(__name__)
         logger.info(content)
-        bot = telegram.Bot(token=TOKEN)
         bot.sendMessage(chat_id=CHAT_ID, text=e)
 
-    return ""
+    return
 
 if __name__ == '__main__':
     logging.basicConfig(filename='flaskAlert.log',level=logging.INFO)
