@@ -30,10 +30,12 @@ def postAlertmanager():
     alert_high = content['alerts'][0]['labels']['severity'].upper()
     alert_inst = content['alerts'][0]['labels']['instance']
     # assume desciption may be empty
-    alert_desc = content['alerts'][0]['annotations'].get('description', None)
 
-    message = '[{}] {} at {}\non {} \n{}'.format(
-            alert_high, alert_name, alert_time, alert_inst, alert_desc)
+    message = '[{}] {} at {}\non {}\n'.format(
+            alert_high, alert_name, alert_time, alert_inst)
+
+    for annotation in content['alerts'][0]['annotations']:
+        message += '{}: {}\n'.format(annotation, content['alerts'][0]['annotations'][annotation])
     bot.sendMessage(chat_id=CHAT_ID, text=message)
 
     return ''
