@@ -1,5 +1,7 @@
 # Alertmanager webhook for Telegram using Flask 
 
+Bot is intended to send alertmanager notifications to a specified `chatID`.
+
 ## INSTALL
 
 * pip install -r requirements.txt
@@ -7,17 +9,20 @@
 Change on flaskAlert.py
 =======================
 * botToken
-* chatID (without -)
+* chatID
   
 Alertmanager configuration example
 ==================================
 
-		receivers:
-		- name: 'telegram-webhook'
-		  webhook_configs:
-		  - url: http://ipFlaskAlert:9119/alert
-		    send_resolved: true
-		    
+```yaml
+receivers:
+  - name: 'telegram-webhook'
+    webhook_configs:
+    - url: http://ipFlaskAlert:9119/alert
+      send_resolved: true
+
+```
+
 One way to get the chat ID
 ==========================
 1) Add bot on channel
@@ -30,4 +35,7 @@ Running
 
 Running on docker
 =================
-* docker container run -d -e bottoken="telegramBotToken" -e chatid="telegramChatID" -p 9119:9119 nopp/alertmanager-webhook-telegram:latest
+
+```
+docker run -d -e bottoken="telegramBotToken" -e chatid="telegramChatID" -p 9119:9119 vvk123/alertmanager-webhook-telegram:latest
+```

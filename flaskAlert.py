@@ -25,13 +25,13 @@ Instance: """+alert['labels']['instance']+"""("""+alert['labels']['name']+""")
 """+alert['annotations']['description']+"""
 """
             bot = telegram.Bot(token="botToken")
-            bot.sendMessage(chat_id="-chatID",text=message)
-    except:
+            bot.sendMessage(chat_id="chatID",text=message)
+    except Exception as e:
 
         logger = logging.getLogger(__name__)
         logger.info(content)
         bot = telegram.Bot(token="botToken")
-        bot.sendMessage(chat_id="-chatID",text="Falhou o envio via Flask para o Telegram")
+        bot.sendMessage(chat_id="chatID",text=e)
 
     return ""
 
